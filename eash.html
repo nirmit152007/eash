@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Body Composition Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 30px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            width: 150px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        input[type="number"], select {
+            width: 150px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #results {
+            border: 1px solid #ccc;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #results h2 {
+            margin-bottom: 15px;
+        }
+
+        #results p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Body Composition Calculator</h1>
+    <form id="bodyCompositionForm">
+        <label for="height">Height (cm or m):</label>
+        <input type="number" step="0.01" id="height" required><br>
+
+        <label for="weight">Total Body Weight (kg):</label>
+        <input type="number" step="0.01" id="weight" required><br>
+
+        <label for="age">Age (years):</label>
+        <input type="number" id="age" required><br>
+
+        <label for="hipSize">Hip Size (cm or inches):</label>
+        <input type="number" step="0.01" id="hipSize" required><br>
+
+        <label for="waistSize">Waist Size (cm or inches):</label>
+        <input type="number" step="0.01" id="waistSize" required><br>
+
+        <label for="armSize">Arm Size (cm or inches):</label>
+        <input type="number" step="0.01" id="armSize" required><br>
+
+        <label for="chestSize">Chest Size (cm or inches):</label>
+        <input type="number" step="0.01" id="chestSize" required><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select><br>
+
+        <button type="button" onclick="calculateComposition()">Calculate</button>
+    </form>
+
+    <div id="results">
+        <!-- The calculated values will be displayed here -->
+    </div>
+
+    <script>
+        function calculateComposition() {
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const age = parseInt(document.getElementById('age').value);
+            const hipSize = parseFloat(document.getElementById('hipSize').value);
+            const waistSize = parseFloat(document.getElementById('waistSize').value);
+            const gender = document.getElementById('gender').value;
+
+            // Formulas to calculate the values
+            const bmi = weight / ((height / 100) ** 2);
+            const bodyFatPercentage = gender === 'male' ?
+                (0.407 * weight) + (0.267 * height) - (19.2 * age) + 9.25 :
+                (0.415 * weight) + (0.267 * height) - (19.2 * age) + 9.25;
+            const muscleMass = weight - (bodyFatPercentage * weight);
+            const totalBodyWater = gender === 'male' ?
+                (2.447 - (0.09156 * age) + (0.1074 * height) + (0.3362 * weight)) - (0.02007 * weight) :
+                (2.097 - (0.1069 * age) + (0.2466 * height) + (0.3315 * weight)) - (0.02783 * weight);
+            const bmr = gender === 'male' ?
+                (88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)) :
+                (447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age));
+            const waistToHipRatio = waistSize / hipSize;
+
+            // Display the results
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <h2>Calculated Values</h2>
+                <p>Body Fat Percentage: ${bodyFatPercentage.toFixed(2)}%</p>
+                <p>Muscle Mass: ${muscleMass.toFixed(2)} kg</p>
+                <p>Total Body Water: ${totalBodyWater.toFixed(2)} liters</p>
+                <p>Basal Metabolic Rate (BMR): ${bmr.toFixed(2)} calories/day</p>
+                <p>Body Mass Index (BMI): ${bmi.toFixed(2)}</p>
+                <p>Waist-to-Hip Ratio: ${waistToHipRatio.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
