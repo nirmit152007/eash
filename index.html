@@ -6,8 +6,9 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 30px;
+            margin: 20px;
             background-color: #f2f2f2;
+            font-size: 16px;
         }
 
         h1 {
@@ -16,7 +17,7 @@
 
         .container {
             background-color: #f2f2f2;
-            padding: 20px;
+            padding: 15px;
             border-radius: 20px;
             box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
             max-width: 400px;
@@ -24,15 +25,13 @@
         }
 
         form {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+            display: grid;
+            grid-gap: 10px;
             margin-bottom: 20px;
         }
 
         label {
-            width: 150px;
+            display: block;
             text-align: right;
             margin-right: 10px;
         }
@@ -40,7 +39,6 @@
         input[type="number"], select {
             width: 150px;
             padding: 5px;
-            margin-bottom: 10px;
             border: 1px solid #d9d9d9;
             border-radius: 5px;
         }
@@ -66,7 +64,7 @@
 
         #results {
             border: 1px solid #ccc;
-            padding: 20px;
+            padding: 15px;
             border-radius: 20px;
             box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
             max-width: 400px;
@@ -84,10 +82,15 @@
         @media (max-width: 500px) {
             .container {
                 max-width: 300px;
+                padding: 10px;
             }
 
             input[type="number"], select {
                 width: 100%;
+            }
+
+            .neumorphism-btn {
+                margin-top: 0;
             }
         }
     </style>
@@ -121,8 +124,8 @@
             <select id="gender" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-            </select><br>
-<br><br><br>
+            </select><br><br>
+
             <button class="neumorphism-btn" type="button" onclick="calculateComposition()">Calculate</button>
         </form>
 
@@ -158,11 +161,11 @@
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
                 <h2>Calculated Values</h2>
-                <p>Body Fat Percentage: ${bodyFatPercentage.toFixed(2)}%</p>
-                <p>Muscle Mass: ${muscleMass.toFixed(2)} kg</p>
-                <p>Total Body Water: ${totalBodyWater.toFixed(2)} liters</p>
-                <p>Basal Metabolic Rate (BMR): ${bmr.toFixed(2)} calories/day</p>
-                <p>Body Mass Index (BMI): ${bmi.toFixed(2)}</p>
+                <p>Body Fat Percentage: ${bodyFatPercentage.toFixed(1)}%</p>
+                <p>Muscle Mass: ${muscleMass.toFixed(1)} kg</p>
+                <p>Total Body Water: ${totalBodyWater.toFixed(1)} liters</p>
+                <p>Basal Metabolic Rate (BMR): ${bmr.toFixed(1)} calories/day</p>
+                <p>Body Mass Index (BMI): ${bmi.toFixed(1)}</p>
                 <p>Waist-to-Hip Ratio: ${waistToHipRatio.toFixed(2)}</p>
             `;
         }
